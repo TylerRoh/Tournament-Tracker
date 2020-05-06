@@ -4,3 +4,9 @@ C:\Users\trohweder\Projects\Tim Corey\Tournament Tracker\TounamentTracker\Tracke
 C:\Users\trohweder\Projects\Tim Corey\Tournament Tracker\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CoreCompileInputs.cache
 C:\Users\trohweder\Projects\Tim Corey\Tournament Tracker\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.dll
 C:\Users\trohweder\Projects\Tim Corey\Tournament Tracker\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.pdb
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\TrackerLibrary.dll
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\TrackerLibrary.pdb
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csprojAssemblyReference.cache
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CoreCompileInputs.cache
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.dll
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.pdb
