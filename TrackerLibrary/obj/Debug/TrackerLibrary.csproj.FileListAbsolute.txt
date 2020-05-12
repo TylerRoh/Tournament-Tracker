@@ -10,3 +10,6 @@ C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debu
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CoreCompileInputs.cache
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.dll
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.pdb
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.dll
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.xml
+C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CopyComplete
