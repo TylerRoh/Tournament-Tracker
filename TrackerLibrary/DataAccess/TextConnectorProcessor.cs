@@ -33,7 +33,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (string line in lines)
             {
-                string[] cols = line.Split(',');
+                string[] cols = line.Split('|');
 
                 PrizeModel p = new PrizeModel();
                 p.Id = int.Parse(cols[0]);
@@ -54,7 +54,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (PrizeModel p in models)
             {
-                lines.Add($"{p.Id},{p.PlaceNumber},{p.PlaceName},{p.PrizeAmount},{p.PrizePercentage}");
+                lines.Add($"{p.Id}|{p.PlaceNumber}|{p.PlaceName}|{p.PrizeAmount}|{p.PrizePercentage}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
@@ -66,7 +66,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach(string line in lines)
             {
-                string[] cols = line.Split(',');
+                string[] cols = line.Split('|');
 
                 PersonModel p = new PersonModel();
                 p.Id = int.Parse(cols[0]);
@@ -87,7 +87,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (PersonModel p in models)
             {
-                lines.Add($"{p.Id},{p.FirstName},{p.LastName},{p.EmailAddress},{p.PhoneNumber}");
+                lines.Add($"{p.Id}|{p.FirstName}|{p.LastName}|{p.EmailAddress}|{p.PhoneNumber}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);

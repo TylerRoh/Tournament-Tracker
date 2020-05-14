@@ -46,7 +46,7 @@
             this.lastNameLabel = new System.Windows.Forms.Label();
             this.firstNameValue = new System.Windows.Forms.TextBox();
             this.firstNameLabel = new System.Windows.Forms.Label();
-            this.deleteSelectedMemberButton = new System.Windows.Forms.Button();
+            this.removeSelectedMemberButton = new System.Windows.Forms.Button();
             this.createTeamButton = new System.Windows.Forms.Button();
             this.addNewMemberBox.SuspendLayout();
             this.SuspendLayout();
@@ -113,6 +113,7 @@
             this.addMemberButton.TabIndex = 16;
             this.addMemberButton.Text = "Add Member";
             this.addMemberButton.UseVisualStyleBackColor = false;
+            this.addMemberButton.Click += new System.EventHandler(this.addMemberButton_Click);
             // 
             // createMemberButton
             // 
@@ -231,19 +232,20 @@
             this.firstNameLabel.TabIndex = 27;
             this.firstNameLabel.Text = "First Name";
             // 
-            // deleteSelectedMemberButton
+            // removeSelectedMemberButton
             // 
-            this.deleteSelectedMemberButton.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.deleteSelectedMemberButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.deleteSelectedMemberButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.deleteSelectedMemberButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.deleteSelectedMemberButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deleteSelectedMemberButton.Location = new System.Drawing.Point(912, 334);
-            this.deleteSelectedMemberButton.Name = "deleteSelectedMemberButton";
-            this.deleteSelectedMemberButton.Size = new System.Drawing.Size(131, 86);
-            this.deleteSelectedMemberButton.TabIndex = 31;
-            this.deleteSelectedMemberButton.Text = "Delete Selected";
-            this.deleteSelectedMemberButton.UseVisualStyleBackColor = false;
+            this.removeSelectedMemberButton.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.removeSelectedMemberButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.removeSelectedMemberButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.removeSelectedMemberButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.removeSelectedMemberButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeSelectedMemberButton.Location = new System.Drawing.Point(912, 334);
+            this.removeSelectedMemberButton.Name = "removeSelectedMemberButton";
+            this.removeSelectedMemberButton.Size = new System.Drawing.Size(131, 86);
+            this.removeSelectedMemberButton.TabIndex = 31;
+            this.removeSelectedMemberButton.Text = "Remove Selected";
+            this.removeSelectedMemberButton.UseVisualStyleBackColor = false;
+            this.removeSelectedMemberButton.Click += new System.EventHandler(this.removeSelectedMemberButton_Click);
             // 
             // createTeamButton
             // 
@@ -266,7 +268,7 @@
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1101, 757);
             this.Controls.Add(this.createTeamButton);
-            this.Controls.Add(this.deleteSelectedMemberButton);
+            this.Controls.Add(this.removeSelectedMemberButton);
             this.Controls.Add(this.addNewMemberBox);
             this.Controls.Add(this.teamMembersListBox);
             this.Controls.Add(this.addMemberButton);
@@ -307,7 +309,7 @@
         private System.Windows.Forms.Label lastNameLabel;
         private System.Windows.Forms.TextBox firstNameValue;
         private System.Windows.Forms.Label firstNameLabel;
-        private System.Windows.Forms.Button deleteSelectedMemberButton;
+        private System.Windows.Forms.Button removeSelectedMemberButton;
         private System.Windows.Forms.Button createTeamButton;
     }
 }

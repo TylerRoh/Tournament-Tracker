@@ -41,5 +41,13 @@ namespace TrackerLibrary.Models
             EmailAddress = emailAddress;
             PhoneNumber = phoneNumber;
         }
+
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
     }
 }

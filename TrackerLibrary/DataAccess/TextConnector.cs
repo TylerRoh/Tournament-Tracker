@@ -15,7 +15,7 @@ namespace TrackerLibrary.TextHelpers
         //this is where all prize models will be stored
         private const string PrizesFile = "PrizeModels.csv";
         //All Person Models stored here
-        private const string PeopleFile = "People.csv";
+        private const string PeopleFile = "PersonModels.csv";
         /// <summary>
         /// Saves a new prize to the txt doc
         /// </summary>
@@ -63,6 +63,11 @@ namespace TrackerLibrary.TextHelpers
             people.SaveToPersonFile(PeopleFile);
 
             return model;
+        }
+
+        public List<PersonModel> GetPerson_All()
+        {
+            throw new NotImplementedException();
         }
     }
 }
