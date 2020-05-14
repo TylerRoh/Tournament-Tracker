@@ -14,6 +14,8 @@ namespace TrackerLibrary.TextHelpers
     {
         //this is where all prize models will be stored
         private const string PrizesFile = "PrizeModels.csv";
+        //All Person Models stored here
+        private const string PeopleFile = "People.csv";
         /// <summary>
         /// Saves a new prize to the txt doc
         /// </summary>
@@ -37,6 +39,28 @@ namespace TrackerLibrary.TextHelpers
             prizes.Add(model);
 
             prizes.SaveToPrizeFile(PrizesFile);
+
+            return model;
+        }
+
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            //Loads people.csv and converts to list of PersonModel
+            List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+
+            //order by id descending and saves the highest id value +1 for the new model
+            int currentId = 1;
+
+            if (people.Count > 0)
+            {
+                currentId = people.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            model.Id = currentId;
+
+            people.Add(model);
+
+            people.SaveToPersonFile(PeopleFile);
 
             return model;
         }
