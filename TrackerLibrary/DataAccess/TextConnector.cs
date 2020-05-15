@@ -67,7 +67,9 @@ namespace TrackerLibrary.TextHelpers
 
         public List<PersonModel> GetPerson_All()
         {
-            throw new NotImplementedException();
+            List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+
+            return people;
         }
     }
 }
