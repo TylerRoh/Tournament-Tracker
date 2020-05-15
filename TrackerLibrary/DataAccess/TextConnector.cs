@@ -13,9 +13,12 @@ namespace TrackerLibrary.TextHelpers
     public class TextConnector : IDataConnection
     {
         //this is where all prize models will be stored
-        private const string PrizesFile = "PrizeModels.csv";
+        private const string PrizesFile = "PrizeModels.txt";
         //All Person Models stored here
-        private const string PeopleFile = "PersonModels.csv";
+        private const string PeopleFile = "PersonModels.txt";
+        //Team name and id stored here
+        private const string TeamsFile = "TeamsModels.txt";
+
         /// <summary>
         /// Saves a new prize to the txt doc
         /// </summary>
@@ -67,9 +70,28 @@ namespace TrackerLibrary.TextHelpers
 
         public List<PersonModel> GetPerson_All()
         {
-            List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+            return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+        }
 
-            return people;
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            List<TeamModel> teams = TeamsFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
+
+            int currentId = 1;
+
+            if (teams.Count > 0)
+            {
+                currentId = teams.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            model.Id = currentId;
+
+            teams.Add(model);
+
+            teams.SaveToTeamsFile(TeamsFile);
+
+            return model;
+
         }
     }
 }

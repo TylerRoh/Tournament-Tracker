@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using TrackerLibrary;
 using TrackerLibrary.Models;
 
@@ -140,6 +141,38 @@ namespace TrackerUI
                 WireUpLists();
             }
             
+        }
+
+        private void createTeamButton_Click(object sender, EventArgs e)
+        {
+            if (ValidateTeam())
+            {
+                TeamModel t = new TeamModel(
+                    selectedTeamMembers,
+                    teamNameValue.Text);
+
+                GlobalConfig.Connection.CreateTeam(t);
+                // TODO - If form is not going to close out after clicking create, write method to reset the form
+            }
+            else
+            {
+                MessageBox.Show("Team has invalid information. Please check and try again.");
+            }
+        }
+        private bool ValidateTeam()
+        {
+            bool output = true;
+
+            if (String.IsNullOrWhiteSpace(teamNameValue.Text))
+            {
+                output = false;
+            }
+            if (selectedTeamMembers.Count < 1)
+            {
+                output = false;
+            }
+                
+            return output;
         }
     }
 }

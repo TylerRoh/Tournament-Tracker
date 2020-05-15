@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -81,6 +82,35 @@ namespace TrackerLibrary.DataAccess.TextConnector
             return output;
         }
 
+        public static List<TeamModel> ConvertToTeamModels(this List<string> lines, string peopleFileName)
+        {
+            List<TeamModel> output = new List<TeamModel>();
+            List<PersonModel> people = peopleFileName.FullFilePath().LoadFile().ConvertToPersonModels();
+
+            foreach (string line in lines)
+            {
+                if (!String.IsNullOrWhiteSpace(line))
+                {
+                    string[] cols = line.Split('|');
+
+                    TeamModel t = new TeamModel();
+                    t.Id = int.Parse(cols[0]);
+                    t.TeamName = cols[1];
+
+                    string[] memberIds = cols[2].Split(',');
+
+                    foreach (string id in memberIds)
+                    {
+                        t.TeamMembers.Add(people.Where(x => x.Id == int.Parse(id)).First());
+                    }
+
+
+                    output.Add(t);
+                }
+            }
+            return output;
+        }
+
         public static void SaveToPersonFile(this List<PersonModel> models, string fileName)
         {
             List<string> lines = new List<string>();
@@ -92,5 +122,22 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
+
+        public static void SaveToTeamsFile(this List<TeamModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach (TeamModel t in models)
+            {
+                string newLine = $"{t.Id}|{t.TeamName}|{String.Join(",", t.TeamMembers.Select(x => x.Id))}";
+
+                lines.Add(newLine);
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
+
+        
+
     }
 }
