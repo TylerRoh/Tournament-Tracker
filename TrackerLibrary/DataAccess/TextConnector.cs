@@ -93,5 +93,10 @@ namespace TrackerLibrary.TextHelpers
             return model;
 
         }
+
+        public List<TeamModel> GetTeam_All()
+        {
+            return TeamsFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
+        }
     }
 }
