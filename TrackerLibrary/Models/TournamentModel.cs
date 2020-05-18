@@ -22,6 +22,7 @@ namespace TrackerLibrary.Models
             Prizes = prizes;
 
         }
+        public int Id { get; set; }
         /// <summary>
         /// Represents the name of the tournament.
         /// </summary>

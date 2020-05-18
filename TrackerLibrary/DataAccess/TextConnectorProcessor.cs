@@ -137,7 +137,52 @@ namespace TrackerLibrary.DataAccess.TextConnector
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
 
-        
+        public static List<TournamentModel> ConvertToTournamentModels(this List<string> lines, string teamsFileName, string prizesFileName, string peopleFileName)
+        {
+            List<TournamentModel> output = new List<TournamentModel>();
+            List<TeamModel> teams = teamsFileName.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
+            List<PrizeModel> prizes = prizesFileName.FullFilePath().LoadFile().ConvertToPrizeModels();
+
+            foreach (string line in lines)
+            {
+                string[] cols = line.Split('|');
+
+                TournamentModel t = new TournamentModel();
+                t.Id = int.Parse(cols[0]);
+                t.TournamentName = cols[1];
+                t.EntryFee = decimal.Parse(cols[2]);
+
+                string[] entryIds = cols[3].Split(',');
+
+                foreach (string id in entryIds)
+                {
+                    t.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                string[] prizeIds = cols[4].Split(',');
+
+                foreach (string id in prizeIds)
+                {
+                    t.Prizes.Add(prizes.Where(x => x.Id == int.Parse(id)).First());
+                }
+
+                output.Add(t);
+            }
+
+            return output;
+        }
+
+        public static void SaveToTournamentsFile(this List<TournamentModel> models, string fileName)
+        {
+            List<string> lines = new List<string>();
+
+            foreach (TournamentModel t in models)
+            {
+                string newLine = $"{t.Id}|{t.TournamentName}|{t.EntryFee}|{String.Join(",", t.EnteredTeams.Select(x => x.Id))}|{String.Join(",", t.Prizes.Select(x => x.Id))}";
+            }
+
+            File.WriteAllLines(fileName.FullFilePath(), lines);
+        }
 
     }
 }

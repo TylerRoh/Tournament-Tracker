@@ -148,6 +148,11 @@ namespace TrackerUI
 
         private void createTournamentButton_Click(object sender, EventArgs e)
         {
+            //Create the tournament entry
+            //Create all prizes entries
+            //Create all team entries
+
+            //Create matchups
             if (ValidateForm())
             {
                 TournamentModel tournament = new TournamentModel(

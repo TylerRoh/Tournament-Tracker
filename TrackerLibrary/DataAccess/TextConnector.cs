@@ -18,6 +18,8 @@ namespace TrackerLibrary.TextHelpers
         private const string PeopleFile = "PersonModels.txt";
         //Team name and id stored here
         private const string TeamsFile = "TeamsModels.txt";
+        //Tournaments are stored here
+        private const string TournamentsFile = "TournamentsModels.txt";
 
         /// <summary>
         /// Saves a new prize to the txt doc
@@ -101,7 +103,22 @@ namespace TrackerLibrary.TextHelpers
 
         public TournamentModel CreateTournament(TournamentModel model)
         {
-            throw new NotImplementedException();
+            List<TournamentModel> tournaments = TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels(TeamsFile, PrizesFile, PeopleFile);
+
+            int currentId = 1;
+
+            if (tournaments.Count > 0)
+            {
+                currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+            }
+
+            model.Id = currentId;
+
+            tournaments.Add(model);
+
+            tournaments.SaveToTournamentsFile(TournamentsFile);
+
+            return model;
         }
     }
 }
