@@ -10,6 +10,7 @@ using TrackerLibrary.Models;
 namespace TrackerLibrary.DataAccess
 {
     
+
     public class SqlConnector : IDataConnection
     {
 
@@ -38,6 +39,7 @@ namespace TrackerLibrary.DataAccess
                 return model;
             }
         }
+        
 
         public PersonModel CreatePerson(PersonModel model)
         {
@@ -105,9 +107,21 @@ namespace TrackerLibrary.DataAccess
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 output = connection.Query<TeamModel>("dbo.spTeams_GetAll").ToList();
-            }
 
+                foreach (TeamModel t in output)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@TeamId", t.Id);
+                    t.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            
             return output;
+        }
+
+        public TournamentModel CreateTournament(TournamentModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -98,5 +98,10 @@ namespace TrackerLibrary.TextHelpers
         {
             return TeamsFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
         }
+
+        public TournamentModel CreateTournament(TournamentModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

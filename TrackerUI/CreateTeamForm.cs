@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,18 +15,22 @@ using TrackerLibrary.Models;
 
 namespace TrackerUI
 {
+    
     public partial class CreateTeamForm : Form
     {
+        private ITeamRequester callingForm;
         private List<PersonModel> availableTeamMembers = new List<PersonModel>(GlobalConfig.Connection.GetPerson_All());
         private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
 
-        public CreateTeamForm()
+        public CreateTeamForm(ITeamRequester caller)
         {
             InitializeComponent();
 
             //CreateTestData();
 
             WireUpLists();
+
+            callingForm = caller;
         }
 
 
@@ -152,7 +157,10 @@ namespace TrackerUI
                     teamNameValue.Text);
 
                 GlobalConfig.Connection.CreateTeam(t);
-                // TODO - If form is not going to close out after clicking create, write method to reset the form
+
+                callingForm.TeamComplete(t);
+
+                this.Close();
             }
             else
             {

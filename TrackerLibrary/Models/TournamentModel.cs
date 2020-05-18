@@ -8,6 +8,20 @@ namespace TrackerLibrary.Models
 {
     public class TournamentModel
     {
+        public TournamentModel()
+        {
+
+        }
+        public TournamentModel(string tournamentName, string entryFee, List<TeamModel> enteredTeams, List<PrizeModel> prizes)
+        {
+            TournamentName = tournamentName;
+            decimal entryFeeValue = 0;
+            decimal.TryParse(entryFee, out entryFeeValue);
+            EntryFee = entryFeeValue;
+            EnteredTeams = enteredTeams;
+            Prizes = prizes;
+
+        }
         /// <summary>
         /// Represents the name of the tournament.
         /// </summary>
