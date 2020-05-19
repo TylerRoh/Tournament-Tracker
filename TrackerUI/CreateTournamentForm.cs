@@ -160,6 +160,7 @@ namespace TrackerUI
                     selectedPrizes);
 
                 //Wire up Matchups
+                TournamentLogic.CreateRounds(tournament);
 
 
 
