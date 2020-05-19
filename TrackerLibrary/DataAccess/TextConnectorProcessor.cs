@@ -179,6 +179,8 @@ namespace TrackerLibrary.DataAccess.TextConnector
             foreach (TournamentModel t in models)
             {
                 string newLine = $"{t.Id}|{t.TournamentName}|{t.EntryFee}|{String.Join(",", t.EnteredTeams.Select(x => x.Id))}|{String.Join(",", t.Prizes.Select(x => x.Id))}";
+
+                lines.Add(newLine);
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);

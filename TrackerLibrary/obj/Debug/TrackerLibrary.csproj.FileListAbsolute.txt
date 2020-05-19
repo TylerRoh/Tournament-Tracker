@@ -13,3 +13,12 @@ C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debu
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.dll
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.xml
 C:\Users\trohweder\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CopyComplete
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\TrackerLibrary.dll
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\TrackerLibrary.pdb
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.dll
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\bin\Debug\Dapper.xml
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csprojAssemblyReference.cache
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CoreCompileInputs.cache
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CopyComplete
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.dll
+C:\Users\rohwe\Projects\Tim Corey\Tournament-Tracker\TrackerLibrary\obj\Debug\TrackerLibrary.pdb
