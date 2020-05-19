@@ -137,11 +137,15 @@ namespace TrackerLibrary.DataAccess.TextConnector
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
 
-        public static List<TournamentModel> ConvertToTournamentModels(this List<string> lines, string teamsFileName, string prizesFileName, string peopleFileName)
+        public static List<TournamentModel> ConvertToTournamentModels(this List<string> lines,
+            string teamsFileName,
+            string prizesFileName,
+            string peopleFileName)
         {
             List<TournamentModel> output = new List<TournamentModel>();
             List<TeamModel> teams = teamsFileName.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
             List<PrizeModel> prizes = prizesFileName.FullFilePath().LoadFile().ConvertToPrizeModels();
+            List<MatchupModel> rounds = new List<MatchupModel>();
 
             foreach (string line in lines)
             {
@@ -166,6 +170,8 @@ namespace TrackerLibrary.DataAccess.TextConnector
                     t.Prizes.Add(prizes.Where(x => x.Id == int.Parse(id)).First());
                 }
 
+                // TODO - Capture rounds info
+
                 output.Add(t);
             }
 
@@ -178,13 +184,43 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (TournamentModel t in models)
             {
-                string newLine = $"{t.Id}|{t.TournamentName}|{t.EntryFee}|{String.Join(",", t.EnteredTeams.Select(x => x.Id))}|{String.Join(",", t.Prizes.Select(x => x.Id))}";
+                string newLine = $@"{t.Id}|
+                                    {t.TournamentName}|
+                                    {t.EntryFee}|
+                                    {String.Join(",", t.EnteredTeams.Select(x => x.Id))}|
+                                    {String.Join(",", t.Prizes.Select(x => x.Id))}|
+                                    {ConvertRoundListToString(t.Rounds)}";
 
                 lines.Add(newLine);
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
+
+        private static string ConvertRoundListToString(List<List<MatchupModel>> rounds)
+        {
+            string output = "";
+
+            if (rounds.Count == 0)
+            {
+                return "";
+            }
+
+            foreach(List<MatchupModel> r in rounds)
+            {
+                foreach(MatchupModel m in r)
+                {
+                    output += $"{String.Join("^", r.Select(x => x.Id))}";
+                }
+                output += ",";
+                
+            }
+            output = output.Substring(0, output.Length - 1);
+
+            return output;
+        }
+
+        
 
     }
 }

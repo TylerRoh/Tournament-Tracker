@@ -148,9 +148,7 @@ namespace TrackerUI
 
         private void createTournamentButton_Click(object sender, EventArgs e)
         {
-            //Create the tournament entry
-            //Create all prizes entries
-            //Create all team entries
+
 
             //Create matchups
             if (ValidateForm())
@@ -161,11 +159,19 @@ namespace TrackerUI
                     selectedTeams,
                     selectedPrizes);
 
+                //Wire up Matchups
+
+
+
                 GlobalConfig.Connection.CreateTournament(tournament);
             }
             else
             {
-                MessageBox.Show("This form has invalid information. Please check and try again.");
+                MessageBox.Show("This form has invalid information. Please check and try again.", 
+                    "Invalid Information",
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+                
             }
         }
     }

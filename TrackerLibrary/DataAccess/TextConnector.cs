@@ -101,9 +101,12 @@ namespace TrackerLibrary.TextHelpers
             return TeamsFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
         }
 
-        public TournamentModel CreateTournament(TournamentModel model)
+        public void CreateTournament(TournamentModel model)
         {
-            List<TournamentModel> tournaments = TournamentsFile.FullFilePath().LoadFile().ConvertToTournamentModels(TeamsFile, PrizesFile, PeopleFile);
+            List<TournamentModel> tournaments = TournamentsFile
+                .FullFilePath()
+                .LoadFile()
+                .ConvertToTournamentModels(TeamsFile, PrizesFile, PeopleFile);
 
             int currentId = 1;
 
@@ -118,7 +121,6 @@ namespace TrackerLibrary.TextHelpers
 
             tournaments.SaveToTournamentsFile(TournamentsFile);
 
-            return model;
         }
     }
 }
