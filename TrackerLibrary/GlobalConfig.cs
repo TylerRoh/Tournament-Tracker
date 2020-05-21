@@ -12,6 +12,19 @@ namespace TrackerLibrary
 {
     public static class GlobalConfig
     {
+        //this is where all prize models will be stored
+        public const string PrizesFile = "PrizeModels.txt";
+        //All Person Models stored here
+        public const string PeopleFile = "PersonModels.txt";
+        //Team name and id stored here
+        public const string TeamsFile = "TeamsModels.txt";
+        //Tournaments are stored here
+        public const string TournamentsFile = "TournamentModels.txt";
+        //Matchups file
+        public const string MatchupsFile = "MatchupModels.txt";
+        //Matchup Entry file
+        public const string MatchupEntryFile = "MatchupEntryModels.txt";
+
         public static IDataConnection Connection { get; private set; }
 
         public static void InitializeConnections(DatabaseType db)
@@ -34,6 +47,8 @@ namespace TrackerLibrary
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
+
+
     }
     
 }

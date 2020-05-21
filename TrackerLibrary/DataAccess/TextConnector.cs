@@ -19,7 +19,12 @@ namespace TrackerLibrary.TextHelpers
         //Team name and id stored here
         private const string TeamsFile = "TeamsModels.txt";
         //Tournaments are stored here
-        private const string TournamentsFile = "TournamentsModels.txt";
+        private const string TournamentsFile = "TournamentModels.txt";
+        //Matchups file
+        private const string MatchupsFile = "MatchupModels.txt";
+        //Matchup Entry file
+        private const string MatchupEntriesFile = "MatchupEntryModels.txt";
+
 
         /// <summary>
         /// Saves a new prize to the txt doc
@@ -116,6 +121,8 @@ namespace TrackerLibrary.TextHelpers
             }
 
             model.Id = currentId;
+
+            model.SaveRoundsToFile(MatchupsFile, MatchupEntriesFile, TeamsFile, PeopleFile);
 
             tournaments.Add(model);
 
