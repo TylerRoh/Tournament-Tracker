@@ -20,6 +20,7 @@ namespace TrackerLibrary.Models
             EntryFee = entryFeeValue;
             EnteredTeams = enteredTeams;
             Prizes = prizes;
+            
 
         }
         /// <summary>

@@ -145,7 +145,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
             List<TournamentModel> output = new List<TournamentModel>();
             List<TeamModel> teams = teamsFileName.FullFilePath().LoadFile().ConvertToTeamModels(peopleFileName);
             List<PrizeModel> prizes = prizesFileName.FullFilePath().LoadFile().ConvertToPrizeModels();
-            List<MatchupModel> rounds = new List<MatchupModel>();
+            List<List<MatchupModel>> rounds = new List<List<MatchupModel>>();
 
             foreach (string line in lines)
             {
@@ -171,7 +171,14 @@ namespace TrackerLibrary.DataAccess.TextConnector
                 }
 
                 // TODO - Capture rounds info
+                string[] parsedRounds = cols[5].Split(',');
 
+                foreach (string round in parsedRounds)
+                {
+                    string[] parsedRound = round.Split('^');
+
+
+                }
                 output.Add(t);
             }
 
