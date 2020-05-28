@@ -142,7 +142,15 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (MatchupModel m in matchups)
             {
-                string newline = $@"{m.Id}|{String.Join(",", m.Entries.Select(x => x.Id))}|{NullIdCheck(m.Winner.Id)}|{m.MatchupRound}";
+                string newline = $@"{m.Id}|{String.Join(",", m.Entries.Select(x => x.Id))}|";
+                if (m.Winner == null)
+                {
+                    newline += $@"|{m.MatchupRound}";
+                }
+                else
+                {
+                    newline += $@"{m.Winner.Id}|{m.MatchupRound}";
+                }
                 lines.Add(newline);
             }
             File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), lines);
@@ -154,11 +162,23 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             foreach (MatchupEntryModel m in matchupEntries)
             {
-                string newline = $@"{m.Id}|{m.TeamCompeting.Id}|{m.Score}|{NullIdCheck(m.ParentMatchup.Id)}";
+                string newline = $@"{m.Id}|";
+                if (m.TeamCompeting == null)
+                {
+                    newline += $@"|{m.Score}|";
+                }
+                else
+                {
+                    newline += $@"{m.TeamCompeting.Id}|{m.Score}|";
+                }
+                if (m.ParentMatchup != null)
+                {
+                    newline += $@"{m.ParentMatchup.Id}";
+                }
                 lines.Add(newline);
             }
 
-            File.WriteAllLines(GlobalConfig.MatchupsFile.FullFilePath(), lines);
+            File.WriteAllLines(GlobalConfig.MatchupEntryFile.FullFilePath(), lines);
         }
 
         public static void SaveRoundsToFile(this TournamentModel model)
@@ -308,7 +328,10 @@ namespace TrackerLibrary.DataAccess.TextConnector
                 MatchupEntryModel model = new MatchupEntryModel();
 
                 model.Id = int.Parse(cols[0]);
-                model.TeamCompeting = LookUpTeamById(int.Parse(cols[1]));
+                if (!String.IsNullOrWhiteSpace(cols[1]))
+                {
+                    model.TeamCompeting = LookUpTeamById(int.Parse(cols[1]));
+                }
                 if (!String.IsNullOrWhiteSpace(cols[2]))
                 {
                     model.Score = double.Parse(cols[2]);
@@ -335,11 +358,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
                 MatchupModel matchup = new MatchupModel();
                 matchup.Id = int.Parse(cols[0]);
 
-                string[] matchupEntryIds = cols[1].Split(',');
-                foreach (string id in matchupEntryIds)
-                {
-                    matchup.Entries.Add(LookUpMatchupEntryById(int.Parse(id)));
-                }
+                matchup.Entries = ConvertColToMatchupEntryModels(cols[1]);
 
                 if (!String.IsNullOrWhiteSpace(cols[2]))
                 {
@@ -350,6 +369,18 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
             }
 
+            return output;
+        }
+        public static List<MatchupEntryModel> ConvertColToMatchupEntryModels(string input)
+        {
+            string[] ids = input.Split(',');
+            List<MatchupEntryModel> output = new List<MatchupEntryModel>();
+            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+
+            foreach (string id in ids)
+            {
+                output.Add(entries.Where(x => x.Id == int.Parse(id)).First());
+            }
             return output;
         }
 
@@ -384,12 +415,6 @@ namespace TrackerLibrary.DataAccess.TextConnector
             return people.Where(x => x.Id == id).First();
         }
 
-        private static string NullIdCheck(int Id)
-        {
-            string output = "";
-
-            return output + Id;
-        }
         
     }
 }
