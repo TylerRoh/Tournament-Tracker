@@ -98,7 +98,7 @@ namespace TrackerLibrary.TextHelpers
             List<TournamentModel> tournaments = GlobalConfig.TournamentsFile
                 .FullFilePath()
                 .LoadFile()
-                .ConvertToTournamentModels();
+                .ConvertStringsToTournamentModels();
 
             int currentId = 1;
 
@@ -109,11 +109,11 @@ namespace TrackerLibrary.TextHelpers
 
             model.Id = currentId;
 
-            model.SaveRoundsToFile();
+            model.Rounds.SaveRoundsToFile();
 
             tournaments.Add(model);
 
-            tournaments.SaveToTournamentsFile();
+            tournaments.SaveToTournamentFile();
 
         }
     }

@@ -1,3 +1,6 @@
-1|Poop-Pants|McNichols|pmn@hotmail.com|3890306
-2|Peter|PumpkinEater|peterpeter@peter.net|8259862
-3|Tyler|Rohweder|Tyler@pfcequip.com|7632440306
+1|Tyler|Rohweder|t@g.com|7896452
+2|Kelly|DiMatteo|k@k.co|4563214
+3|Brock|Sampson|bs@gmail.com|4568974
+4|Hank|Venture|Hanky@venture.co|4862597
+5|Sterling|Archer|sa@isis.com|5687423
+6|Lana|Caine|lc@isis.com|4298531
