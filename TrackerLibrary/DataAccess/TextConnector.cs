@@ -116,5 +116,10 @@ namespace TrackerLibrary.TextHelpers
             tournaments.SaveToTournamentFile();
 
         }
+
+        public List<TournamentModel> GetTournament_All()
+        {
+            return GlobalConfig.TournamentsFile.FullFilePath().LoadFile().ConvertStringsToTournamentModels();
+        }
     }
 }

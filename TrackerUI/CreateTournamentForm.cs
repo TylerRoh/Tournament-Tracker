@@ -14,15 +14,18 @@ namespace TrackerUI
 {
     public partial class CreateTournamentForm : Form, IPrizeRequester, ITeamRequester
     {
+        private ITournamentRequester callingForm;
         private List<TeamModel> availableTeams = new List<TeamModel>(GlobalConfig.Connection.GetTeam_All());
         private List<TeamModel> selectedTeams = new List<TeamModel>();
         private List<PrizeModel> selectedPrizes = new List<PrizeModel>();
 
-        public CreateTournamentForm()
+        public CreateTournamentForm(ITournamentRequester caller)
         {
             InitializeComponent();
 
             WireUpLists();
+
+            callingForm = caller;
         }
 
         private void WireUpLists()
