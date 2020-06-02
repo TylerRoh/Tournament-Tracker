@@ -109,7 +109,7 @@ namespace TrackerLibrary.TextHelpers
 
             model.Id = currentId;
 
-            model.Rounds.SaveRoundsToFile();
+            model.SaveRoundsToFile();
 
             tournaments.Add(model);
 

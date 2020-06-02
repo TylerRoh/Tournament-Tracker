@@ -139,7 +139,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
             File.WriteAllLines(GlobalConfig.PrizesFile.FullFilePath(), lines);
         }
 
-        public static void SaveRoundsToFile(this List<List<MatchupModel>> rounds)
+        public static void SaveRoundsToFile(this TournamentModel model)
         {
             List<MatchupModel> matchups = GlobalConfig.MatchupsFile
                                                               .FullFilePath()
@@ -150,7 +150,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
                                                                   .FullFilePath()
                                                                   .LoadFile()
                                                                   .ConvertToMatchupEntries();
-            foreach (List<MatchupModel> round in rounds)
+            foreach (List<MatchupModel> round in model.Rounds)
             {
 
                 foreach (MatchupModel match in round)
@@ -198,9 +198,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
 
                 newline += $@"{match.Id}|";
 
-                string entries = String.Join(",", match.Entries.Select(x => x.Id));
-
-                newline += $@"{entries}|";
+                newline += $@"{String.Join(",", match.Entries.Select(x => x.Id))}|";
 
                 if (match.Winner != null)
                 {
@@ -419,7 +417,7 @@ namespace TrackerLibrary.DataAccess.TextConnector
                 string[] cols = line.Split('|');
 
                 matchup.Id = int.Parse(cols[0]);
-                if (!String.IsNullOrWhiteSpace(cols[1]))
+                if (cols[1].Length > 0)
                 {
                     matchup.TeamCompeting = LookUpTeamById(int.Parse(cols[1]));
                 }
