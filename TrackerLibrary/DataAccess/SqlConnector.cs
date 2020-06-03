@@ -156,21 +156,21 @@ namespace TrackerLibrary.DataAccess
                         matchup.Entries = connection.Query<MatchupEntryModel>("dbo.spMatchupEntries_GetByMatchup", p, commandType: CommandType.StoredProcedure).ToList();
 
 
-                        if (matchup.Winner != null)
+                        if (matchup.WinnerId > 0)
                         {
-                            matchup.Winner = tournament.EnteredTeams.Where(x => x.Id == matchup.Winner.Id).First();
+                            matchup.Winner = tournament.EnteredTeams.Where(x => x.Id == matchup.WinnerId).First();
                         }
 
                         foreach (MatchupEntryModel entry in matchup.Entries)
                         {
-                            if (entry.TeamCompeting != null)
+                            if (entry.TeamCompetingId > 0)
                             {
-                                entry.TeamCompeting = tournament.EnteredTeams.Where(x => x.Id == matchup.Winner.Id).First();
+                                entry.TeamCompeting = tournament.EnteredTeams.Where(x => x.Id == entry.TeamCompetingId).First();
                             }
 
-                            if (entry.ParentMatchup != null)
+                            if (entry.ParentMatchupId > 0)
                             {
-                                entry.ParentMatchup = matchups.Where(x => x.Id == matchup.Winner.Id).First();
+                                entry.ParentMatchup = matchups.Where(x => x.Id == entry.ParentMatchupId).First();
                             }
                         }
                         

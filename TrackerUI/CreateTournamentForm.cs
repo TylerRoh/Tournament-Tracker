@@ -168,6 +168,10 @@ namespace TrackerUI
 
 
                 GlobalConfig.Connection.CreateTournament(tournament);
+
+                callingForm.TournamentComplete(tournament);
+
+                this.Close();
             }
             else
             {

@@ -15,6 +15,7 @@ namespace TrackerUI
     public partial class TournamentDashboardForm : Form, ITournamentRequester
     {
         private List<TournamentModel> tournaments = new List<TournamentModel>(GlobalConfig.Connection.GetTournament_All());
+
         public TournamentDashboardForm()
         {
             InitializeComponent();
@@ -31,9 +32,12 @@ namespace TrackerUI
         }
 
 
+
         public void TournamentComplete(TournamentModel model)
         {
-            throw new NotImplementedException();
+            tournaments.Add(model);
+
+            WireUpList();
         }
 
         private void headerLable_Click(object sender, EventArgs e)
@@ -51,5 +55,15 @@ namespace TrackerUI
             CreateTournamentForm frm = new CreateTournamentForm(this);
             frm.Show();
         }
+
+        private void loadTournamentButton_Click(object sender, EventArgs e)
+        {
+            TournamentModel t = (TournamentModel)loadExistingTournamentDropDown.SelectedItem;
+
+            TournamentViewerForm frm = new TournamentViewerForm(t);
+
+            frm.Show();
+        }
+
     }
 }
