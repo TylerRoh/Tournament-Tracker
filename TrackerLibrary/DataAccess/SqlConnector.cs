@@ -155,12 +155,13 @@ namespace TrackerLibrary.DataAccess
 
                         matchup.Entries = connection.Query<MatchupEntryModel>("dbo.spMatchupEntries_GetByMatchup", p, commandType: CommandType.StoredProcedure).ToList();
 
-
+                        //if there is a winner grabs the winner from the tournaments entered teams based on winner id.
                         if (matchup.WinnerId > 0)
                         {
                             matchup.Winner = tournament.EnteredTeams.Where(x => x.Id == matchup.WinnerId).First();
                         }
 
+                        //Grabs the models for team competing and parent matchup based off the passed in ids for both from the sql database
                         foreach (MatchupEntryModel entry in matchup.Entries)
                         {
                             if (entry.TeamCompetingId > 0)
@@ -173,24 +174,23 @@ namespace TrackerLibrary.DataAccess
                                 entry.ParentMatchup = matchups.Where(x => x.Id == entry.ParentMatchupId).First();
                             }
                         }
-                        
-                        
                     }
-                    int rounds = matchups.OrderByDescending(x => x.MatchupRound).First().MatchupRound;
-                    while (rounds > 0)
+                    //this part will populate our rounds with lists of matchups based off round number
+                    int totalRounds = matchups.OrderByDescending(x => x.MatchupRound).First().MatchupRound;
+                    int currentRound = 1;
+                    while (totalRounds >= currentRound)
                     {
                         List<MatchupModel> round = new List<MatchupModel>();
                         foreach (MatchupModel match in matchups)
                         {
-                            if (match.MatchupRound == rounds)
+                            if (match.MatchupRound == currentRound)
                             {
                                 round.Add(match);
                             }
                         }
                         tournament.Rounds.Add(round);
-                        rounds--;
+                        currentRound++;
                     }
-
                 }
             }
 

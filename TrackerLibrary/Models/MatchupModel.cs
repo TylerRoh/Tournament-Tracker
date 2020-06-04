@@ -28,5 +28,31 @@ namespace TrackerLibrary.Models
         /// Represents the round that the matchup is taking place in.
         /// </summary>
         public int MatchupRound { get; set; }
+        /// <summary>
+        /// Returns the Team names in the tournament viewer to display the matchup
+        /// </summary>
+        public string DisplayName
+        {
+            get
+            {
+                List<string> teamNames = new List<string>();
+                foreach (MatchupEntryModel me in Entries)
+                {
+                    if (me.TeamCompeting != null)
+                    {
+                        teamNames.Add(me.TeamCompeting.TeamName);
+                    }
+                }
+                if (teamNames.Count >= 1)
+                {
+                    return String.Join(" vs. ", teamNames);
+                }
+                else
+                {
+                    return "TBD";
+                }
+                
+            }
+        }
     }
 }
