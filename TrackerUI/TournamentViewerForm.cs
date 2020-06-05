@@ -15,7 +15,6 @@ namespace TrackerUI
     {
         private TournamentModel tournament;
 
-        private int roundNumber;
 
         private List<MatchupModel> matchups = new List<MatchupModel>();
 
@@ -25,7 +24,6 @@ namespace TrackerUI
             InitializeComponent();
 
             tournament = model;
-
 
             LoadFormData();
 
@@ -38,6 +36,8 @@ namespace TrackerUI
             tournamentName.Text = tournament.TournamentName;
             WireUpRoundsList();
             LoadMatchups(1);
+            WireUpMatchupList();
+            LoadMatch();
         }
 
         private void WireUpRoundsList()
