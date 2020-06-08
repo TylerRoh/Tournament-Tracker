@@ -35,7 +35,6 @@ namespace TrackerUI
         {
             tournamentName.Text = tournament.TournamentName;
             WireUpRoundsList();
-            LoadMatchups(1);
             WireUpMatchupList();
             LoadMatch();
         }
@@ -46,6 +45,7 @@ namespace TrackerUI
         }
         private void WireUpMatchupList()
         {
+            LoadMatchups((int)roundDropDown.SelectedItem);
             MatchupListBox.DataSource = null;
             MatchupListBox.DataSource = matchups;
             MatchupListBox.DisplayMember = "DisplayName";
@@ -53,7 +53,6 @@ namespace TrackerUI
 
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadMatchups((int)roundDropDown.SelectedItem);
             WireUpMatchupList();
         }
 
@@ -61,14 +60,29 @@ namespace TrackerUI
         /// populates your matchups list with the current round selected in the dropdown
         /// </summary>
         private void LoadMatchups(int roundNumber)
-        { 
+        {
+            matchups = new List<MatchupModel>();
 
             foreach (List<MatchupModel> round in tournament.Rounds)
             {
                 if (round.First().MatchupRound == roundNumber)
                 {
-                    matchups = round;
-                    break;
+                    if (unplayedOnlyCheckbox.Checked)
+                    {
+                        matchups = new List<MatchupModel>();
+                        foreach (MatchupModel matchup in round)
+                        {
+                            if (matchup.Entries.First().Score == 0 && matchup.Entries.Last().Score == 0 && matchup.Entries.Count > 1)
+                            {
+                                matchups.Add(matchup);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        matchups = round;
+                        break;
+                    }
                 }
             }
           
@@ -119,6 +133,57 @@ namespace TrackerUI
 
         private void unplayedOnlyCheckbox_CheckedChanged(object sender, EventArgs e)
         {
+            WireUpMatchupList();
+        }
+
+        private void scoreButton_Click(object sender, EventArgs e)
+        {
+            MatchupModel selectedMatchup = (MatchupModel)MatchupListBox.SelectedItem;
+            //Validate Scores Entered
+            if (ValidateScoring(selectedMatchup))
+            {
+                //Add Score to the matchup entry models
+                selectedMatchup.Entries.First().Score = double.Parse(teamOneScoreValue.Text);
+                selectedMatchup.Entries.Last().Score = double.Parse(teamTwoScoreValue.Text);
+                WireUpMatchupList();
+            }
+            else
+            {
+                MessageBox.Show("The scoring is invalid. Please check and try again.");
+            }
+            
+
+            //Determine if it is the last matchup in the round
+            //If it is the last in the round generate the next round
+            //Save data to the dbs
+        }
+
+        private bool ValidateScoring(MatchupModel selectedMatchup)
+        {
+            bool valid = true;
+            double teamOneScore = 0;
+            bool teamOneScoreValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
+            double teamTwoScore = 0;
+            bool teamTwoScoreValid = double.TryParse(teamTwoScoreValue.Text, out teamOneScore);
+
+            if (!teamOneScoreValid || !teamTwoScoreValid)
+            {
+                valid = false;
+            }
+            if (teamOneScore == teamTwoScore)
+            {
+                valid = false;
+            }
+            if (teamOneScore < 0 || teamTwoScore < 0)
+            {
+                valid = false;
+            }
+            if (selectedMatchup.Entries.Count < 2)
+            {
+                valid = false;
+            }
+
+            return valid;
         }
     }
 }
