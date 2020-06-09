@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrackerLibrary;
 using TrackerLibrary.Models;
 
 namespace TrackerUI
@@ -145,11 +146,25 @@ namespace TrackerUI
                 //Add Score to the matchup entry models
                 selectedMatchup.Entries.First().Score = double.Parse(teamOneScoreValue.Text);
                 selectedMatchup.Entries.Last().Score = double.Parse(teamTwoScoreValue.Text);
+
+                if(selectedMatchup.Entries.First().Score > selectedMatchup.Entries.Last().Score)
+                {
+                    selectedMatchup.Winner = selectedMatchup.Entries.First().TeamCompeting;
+                }
+                else
+                {
+                    selectedMatchup.Winner = selectedMatchup.Entries.Last().TeamCompeting;
+                }
                 WireUpMatchupList();
             }
             else
             {
                 MessageBox.Show("The scoring is invalid. Please check and try again.");
+            }
+            if (TournamentLogic.RoundCompleteCheck(tournament))
+            {
+                TournamentLogic.GenerateNextRound(tournament);
+                WireUpMatchupList();
             }
             
 

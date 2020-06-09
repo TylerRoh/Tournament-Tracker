@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using TrackerLibrary.Models;
 
 namespace TrackerLibrary
@@ -21,6 +23,80 @@ namespace TrackerLibrary
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
 
             CreateOtherRounds(model, rounds);
+        }
+
+        public static void GenerateNextRound(TournamentModel model)
+        {
+            int currentRoundIndex = 0;
+            foreach (List<MatchupModel> round in model.Rounds)
+            {
+                if (round.First().Entries.First().TeamCompeting == null)
+                {
+                    break;
+                }
+                else
+                {
+                    currentRoundIndex++;
+                }
+            }
+            List<TeamModel> winners = new List<TeamModel>();
+            foreach (MatchupModel match in model.Rounds[currentRoundIndex - 1])
+            {
+                winners.Add(match.Winner);
+            }
+            foreach (MatchupModel match in model.Rounds[currentRoundIndex])
+            {
+                foreach (TeamModel team in winners.ToList())
+                {
+                    if (match.Entries[0].TeamCompeting == null)
+                    {
+                        match.Entries[0].TeamCompeting = team;
+                        winners.Remove(team);
+                    }
+                    else if (match.Entries[1].TeamCompeting == null)
+                    {
+                        match.Entries[1].TeamCompeting = team;
+                        winners.Remove(team);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        public static bool RoundCompleteCheck(TournamentModel model)
+        {
+            bool output = false;
+            //Loop through rounds
+            foreach (List<MatchupModel> round in model.Rounds)
+            {
+                //check if current round has teams competing if not return true
+                int winners = 0;
+                if (round.First().Entries.First().TeamCompeting == null)
+                {
+                    output = true;
+                    break;
+                }
+                else
+                {
+                    //count how many matchups are completed
+                    foreach (MatchupModel matchup in round)
+                    {
+                        if (matchup.Winner != null)
+                        {
+                            winners += 1;
+                        }
+                    }
+                    //if not every matchup has a winner return false
+                    if (winners < round.Count)
+                    {
+                        break;
+                    }
+                }
+            }
+            return output;
         }
 
         //Create every round after that - 8 matchups - 4 matchups - 2 - 1
@@ -66,6 +142,7 @@ namespace TrackerLibrary
                 if (byes > 0 || current.Entries.Count > 1)
                 {
                     current.MatchupRound = 1;
+                    current.Winner = current.Entries[0].TeamCompeting;
                     output.Add(current);
                     current = new MatchupModel();
                     
